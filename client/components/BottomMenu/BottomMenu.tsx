@@ -6,19 +6,20 @@ import { Menu } from '../../models/enums/MenuTitles';
 import { MenuItem } from '../../models/MenuItem';
 
 interface BottomMenuProps {
+  navigation: any; // TODO: fix any type
   showMenu: boolean;
   onToggleMenu: (showMenu: boolean) =>  void;
 }
 
-const BottomMenu = ({showMenu, onToggleMenu}: BottomMenuProps) => {
+const BottomMenu = ({navigation, showMenu, onToggleMenu}: BottomMenuProps) => {
   const menu: MenuItem[] = Object.values(Menu).map((title) => ({
     title,
     onPress: () => {
+      navigation.navigate(title);
       console.log(`${title} pressed`);
     },
   }));
   
-  console.log('menu', menu);
  return (
   <SafeAreaView>
     <BottomSheet isVisible={showMenu} onBackdropPress={() => onToggleMenu(false)}>
@@ -28,7 +29,7 @@ const BottomMenu = ({showMenu, onToggleMenu}: BottomMenuProps) => {
     containerStyle={{ backgroundColor: 'white', ...item.containerStyle }}
     onPress={item.onPress}
     android_ripple={{
-      color: 'lighgray', // set a contrasting ripple color
+      color: 'lightgray', // set a contrasting ripple color
       borderless: false,
       foreground: true
     }}
