@@ -8,6 +8,7 @@ import CalendarView from './components/CalendarView/CalendarView';
 import GridView from './components/GridView/GridView';
 import Profile from './components/Profile/Profile';
 import Logout from './components/Logout/Logout';
+import Toast from 'react-native-toast-message';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -23,6 +24,7 @@ const App = () => {
           <Stack.Screen name='Logout' component={Logout} />
         </Stack.Navigator>
       </NavigationContainer>
+      <Toast />
     </SafeAreaProvider>
   )
 
