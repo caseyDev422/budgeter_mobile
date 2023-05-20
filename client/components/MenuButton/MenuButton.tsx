@@ -9,6 +9,7 @@ export interface MenuProps {
   showMenu: boolean;
   visible: boolean;
   setShowMenu: Dispatch<SetStateAction<boolean>>;
+  setVisible: Dispatch<SetStateAction<boolean>>
 }
 
 const MenuButton = (props: MenuProps) => {

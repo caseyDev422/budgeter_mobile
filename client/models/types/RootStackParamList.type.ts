@@ -6,5 +6,4 @@ export type RootStackParamList = {
   CalendarView: undefined;
   GridView: undefined;
   Profile: undefined;
-  Logout: undefined;
 }

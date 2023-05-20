@@ -28,13 +28,13 @@ const App = () => {
           <Stack.Screen name="CalendarView" component={CalendarView} />
           <Stack.Screen name="GridView" component={GridView} />
           <Stack.Screen name="Profile" component={Profile} />
-          <Stack.Screen name="Logout" component={Logout} />
         </Stack.Navigator>
         {visible && (
           <MenuButton
             visible={visible}
             showMenu={showMenu}
             setShowMenu={setShowMenu}
+            setVisible={setVisible}
           />
         )}
       </NavigationContainer>
