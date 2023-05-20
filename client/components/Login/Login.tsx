@@ -1,17 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { View } from 'react-native';
 import { FAB } from '@rneui/themed';
 import { Button } from 'react-native-elements';
 import BottomMenu from '../BottomMenu/BottomMenu';
 import { TextInput } from 'react-native-gesture-handler';
 import useToast from '../../hooks/useToast';
+import { ParamListBase, RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../models/types/RootStackParamList.type';
+
+
+interface LoginProps {
+  navigation: StackNavigationProp<RootStackParamList, 'AddBill'>;
+  route: RouteProp<Record<string, object | undefined>, string>;
+  setVisible: Dispatch<SetStateAction<boolean>>;
+}
 
 
 
 // TODO: fix any type for navigation
-const Login = ({ navigation }: any) => {
-  const [visible, setVisible] = useState(false);
-  const [showMenu, setShowMenu] = useState(false);
+const Login = (props: LoginProps) => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const { message, setMessage, showToast, hideToast } = useToast();
@@ -24,7 +32,7 @@ const Login = ({ navigation }: any) => {
     if (message.type === "success") {
       setUsername("");
       setPassword("");
-      navigation.navigate('Add Bill');
+      props.navigation.navigate('AddBill');
     }
   }, [message]);
 
@@ -37,7 +45,7 @@ const Login = ({ navigation }: any) => {
         text1: 'You have logged in successfully.',
         text2: `Welcome, ${username}.`
       });
-      setVisible(true);
+      props.setVisible(true)
 
     } else {
       setMessage({
@@ -47,40 +55,26 @@ const Login = ({ navigation }: any) => {
       });
     }
   }
-  return(
+  return (
     <View
-    style={{
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
-    }}
-  >
-    <TextInput
-      textContentType='username'
-      placeholder='Username'
-      onChangeText={(e) => setUsername(e)}
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <TextInput
+        textContentType="username"
+        placeholder="Username"
+        onChangeText={e => setUsername(e)}
       />
-    <TextInput
-      textContentType='password'
-      placeholder='Password'
-      onChangeText={(e) => setPassword(e)}
-    />
-   <Button 
-    title="Login"
-    onPress={handleLogin}
-   />
-    <FAB
-        visible={visible}
-        placement='right'
-        onPress={() => setShowMenu(!showMenu)}
-        icon={
-          {name: 'add', color: 'white'}
-        }
-        color="green"
+      <TextInput
+        textContentType="password"
+        placeholder="Password"
+        onChangeText={e => setPassword(e)}
       />
-      <BottomMenu navigation={navigation} showMenu={showMenu} onToggleMenu={setShowMenu}/>
-  </View>
-  )
+      <Button title="Login" onPress={handleLogin} />
+    </View>
+  );
 }
 
 export default Login;

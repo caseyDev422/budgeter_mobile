@@ -1,7 +1,7 @@
 import { Menu } from "./enums/MenuTitles";
 
 export interface MenuItem {
-  title: Menu;
+  title: string;
   containerStyle?: object;
   titleStyle?: object;
   onPress: () => void;
