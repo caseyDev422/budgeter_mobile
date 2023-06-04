@@ -1,10 +1,9 @@
 import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { View } from 'react-native';
-import { FAB, Input } from '@rneui/themed';
+import { Input } from '@rneui/themed';
 import { Button } from 'react-native-elements';
-import BottomMenu from '../BottomMenu/BottomMenu';
 import useToast from '../../hooks/useToast';
-import { ParamListBase, RouteProp } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../models/types/RootStackParamList.type';
 
