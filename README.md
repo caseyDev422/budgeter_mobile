@@ -1,6 +1,6 @@
 # Budgeter Mobile
-mobile version of budgeter app
-Currently only being developed on Android. Development on IOS may or may not be implemented in the future
+Mobile version of budgeter app
+- Currently only being developed on Android. Development on IOS may or may not be implemented in the future
 
 ## Getting Started 
 This application uses React Native for development. For Documentation of React Native & environment Setup Please visit https://reactnative.dev/docs/environment-setup
@@ -15,5 +15,5 @@ This application uses React Native for development. For Documentation of React N
 ### Running the application
 
 Once you read the documentation on how to set up your environment You can start the application as follows:
-`npm start` 
-press `a` to run the application as an android application
+- `npm start` 
+- press `a` to run the application as an android application
