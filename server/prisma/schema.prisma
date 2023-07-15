@@ -12,7 +12,8 @@ generator client {
 
 generator typegraphql {
   provider = "typegraphql-prisma"
-  emitTranspiledCode = true
+  output = "../prisma/generated/type-graphql"
+  emitTranspiledCode = "true"
 }
 
 model Bill {
