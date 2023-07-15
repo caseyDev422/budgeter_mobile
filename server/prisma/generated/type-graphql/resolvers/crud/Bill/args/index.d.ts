@@ -1,0 +1,14 @@
+export { AggregateBillArgs } from "./AggregateBillArgs";
+export { CreateManyBillArgs } from "./CreateManyBillArgs";
+export { CreateOneBillArgs } from "./CreateOneBillArgs";
+export { DeleteManyBillArgs } from "./DeleteManyBillArgs";
+export { DeleteOneBillArgs } from "./DeleteOneBillArgs";
+export { FindFirstBillArgs } from "./FindFirstBillArgs";
+export { FindFirstBillOrThrowArgs } from "./FindFirstBillOrThrowArgs";
+export { FindManyBillArgs } from "./FindManyBillArgs";
+export { FindUniqueBillArgs } from "./FindUniqueBillArgs";
+export { FindUniqueBillOrThrowArgs } from "./FindUniqueBillOrThrowArgs";
+export { GroupByBillArgs } from "./GroupByBillArgs";
+export { UpdateManyBillArgs } from "./UpdateManyBillArgs";
+export { UpdateOneBillArgs } from "./UpdateOneBillArgs";
+export { UpsertOneBillArgs } from "./UpsertOneBillArgs";
