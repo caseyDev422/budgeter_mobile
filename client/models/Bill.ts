@@ -2,7 +2,7 @@ export interface Bill {
   id?: string;
   billName: string;
   amount: Amount;
-  hasAutoDraft: boolean;
+  hasAutoDraft?: boolean;
   dueDate: Date;
 }
 

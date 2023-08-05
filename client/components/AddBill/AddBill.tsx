@@ -1,16 +1,20 @@
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
+import DatePicker from 'react-native-date-picker';
+import CurrencyInput from 'react-native-currency-input';
 import { ParamListBase, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Button, Input } from '@rneui/themed';
-import React, { useEffect, useState } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Button, Input, CheckBox } from '@rneui/themed';
 import { RootStackParamList } from '../../models/types/RootStackParamList.type';
-import { View } from 'react-native';
 import { Formik } from 'formik';
 import { Amount, Bill } from '../../models/Bill';
-import DatePicker from 'react-native-date-picker';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import AddBillStyleSheet from './AddBillStyleSheet';
-import CurrencyInput from 'react-native-currency-input';
 import dayjs from 'dayjs';
+import { useMutation } from '@apollo/client';
+import { CREATE_BILL_MUTATION } from '../../graphql/bill/bill.mutations';
+import useToast from '../../hooks/useToast';
+import { NetworkError } from '@apollo/client/errors';
 
 interface AddBillProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -30,36 +34,75 @@ const AddBill = (props: AddBillProps) => {
   }
   const [inputs, setInputs] = useState(INIT_FORM_VALUES);
   const [open, setOpen] = useState(false);
+  const { message, setMessage, showToast, hideToast} = useToast();
+  const [createBill, { data, loading, error}] = useMutation(CREATE_BILL_MUTATION);
 
   useEffect(() => {
     console.log('inputs', inputs);
   }, [inputs]);
 
-  const handleChange = (name: keyof Amount | keyof Bill, value: string | Date | number | null) => {
-    if(name === 'actualAmount') {
+  useEffect(() => {
+    if (!message.text2) {
+      hideToast();
+    } else {
+      showToast();
+    }
+  }, [message]);
+
+  const handleChange = (name: keyof Amount | keyof Bill, value: string | Date | number | null | boolean) => {
+    if (name === 'actualAmount') {
       setInputs(prevInputs => ({
         ...prevInputs, 
         amount: {
           ...prevInputs.amount,
-          actualAmount: value as number
+          actualAmount: value as number,
+          labelAmount: "$" + value
         }
       }));
-    } else if(typeof name === 'string'){
+    } else if (typeof name === 'string') {
       setInputs(prevInputs => ({ 
         ...prevInputs, 
         [name]: value
       }));
     }
-}
-
-
-  const handleCurrencyTextInput = (textInput: string) => {
-      console.log('textInput', textInput);
-
   }
 
-  const handleFormSubmit = () => {
-    console.log('input values to save', inputs);
+
+  const handleFormSubmit = async () => {
+    const createBillData = {
+      billName: inputs.billName,
+      amount: inputs.amount.actualAmount,
+      hasAutoDraft: inputs.hasAutoDraft,
+      dueDate: inputs.dueDate
+    }
+    console.log('createBillData', createBillData);
+    // TODO: add a refetch of list bill queries when created
+    try {
+      setMessage({
+        type: "info",
+        text1: "Info",
+        text2: "Attempting to create new bill..."
+      });
+
+      await createBill({
+        variables: {
+          data: createBillData
+        }
+      });
+      setMessage({
+        type: "success",
+        text1: "Success",
+        text2: "New bill has been created!"
+      });
+    } catch (error: NetworkError | any) {
+      console.log('error', error);
+      console.log('error', error.networkError.result.errors);
+      setMessage({
+        type: "error",
+        text1: "Error",
+        text2: "Unable to create new bill. Please try again or contact support. 😔"
+      });
+    }
   }
 
   return (
@@ -109,6 +152,16 @@ const AddBill = (props: AddBillProps) => {
               precision={2}
               minValue={0}
               renderTextInput={textInputProps => <Input {...textInputProps} />}
+            />
+          </View>
+          <View>
+            <CheckBox 
+              title="Is this bill autodrafted?"
+              checked={inputs.hasAutoDraft!}
+              onPress={() => {
+                inputs.hasAutoDraft ? handleChange('hasAutoDraft', false) : handleChange('hasAutoDraft', true)
+              }}
+              
             />
           </View>
           <Button
