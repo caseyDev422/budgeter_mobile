@@ -38,6 +38,13 @@ const Login = (props: LoginProps) => {
 
   const handleLogin = () => {
     // TODO: implement hashing for username and passwordrr
+    /**
+     * logic:
+     * run query to find user in db
+     * if not in db, show error toast that no person associated with this username
+     * and to tell user to make an account by clicking the sign up page
+     * else if person is in db, update the loggedInTime
+     */
     if (username.trim() === 'test' && password.trim() === 'test') {
       setMessage({
         type: 'success',
@@ -80,8 +87,20 @@ const Login = (props: LoginProps) => {
         defaultValue={password}
         secureTextEntry
       />
-      <Button title='Login' onPress={handleLogin} />
-      <Button title='Sign Up' onPress={handleSignUp} />
+      <View
+        style={{
+          width: "50%",
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Button title='Login'
+        onPress={handleLogin} />
+        <Button title='Sign Up' onPress={handleSignUp} />
+      </View>
+      
     </View>
   );
 }
