@@ -17,7 +17,9 @@ generator typegraphql {
 }
 
 model Bill {
-  id                    String                     @id @default(auto()) @map("_id") @db.ObjectId
+  id                    String          @id @default(auto()) @map("_id") @db.ObjectId
   billName              String
   amount                Float
+  dueDate               String
+  hasAutoDraft          Boolean?        @default(false)
 }

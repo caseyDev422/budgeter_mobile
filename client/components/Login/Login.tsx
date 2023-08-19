@@ -9,14 +9,12 @@ import { RootStackParamList } from '../../models/types/RootStackParamList.type';
 
 
 interface LoginProps {
-  navigation: StackNavigationProp<RootStackParamList, 'AddBill'>;
+  navigation: StackNavigationProp<RootStackParamList, 'CalendarView'>;
   route: RouteProp<Record<string, object | undefined>, string>;
   setVisible: Dispatch<SetStateAction<boolean>>;
 }
 
 
-
-// TODO: fix any type for navigation
 const Login = (props: LoginProps) => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -28,22 +26,18 @@ const Login = (props: LoginProps) => {
   }, []);
 
   useEffect(() => {
-    console.log('username', username);
-    console.log('password', password);
-    console.log('message', message);
     if (message && message.type) {
       showToast();
     }
     if (message.type === "success") {
       setUsername("");
       setPassword("");
-      props.navigation.navigate('AddBill');
+      props.navigation.navigate('CalendarView');
     }
   }, [message]);
 
   const handleLogin = () => {
     // TODO: implement hashing for username and passwordrr
-    console.log('login')
     if (username.trim() === 'test' && password.trim() === 'test') {
       setMessage({
         type: 'success',
