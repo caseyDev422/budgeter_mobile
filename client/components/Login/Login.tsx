@@ -9,30 +9,30 @@ import { RootStackParamList } from '../../models/types/RootStackParamList.type';
 
 
 interface LoginProps {
-  navigation: StackNavigationProp<RootStackParamList, 'CalendarView'>;
+  navigation: StackNavigationProp<RootStackParamList>;
   route: RouteProp<Record<string, object | undefined>, string>;
   setVisible: Dispatch<SetStateAction<boolean>>;
 }
 
 
 const Login = (props: LoginProps) => {
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const { message, setMessage, showToast, hideToast } = useToast();
 
   useEffect(() => {
-    setUsername("");
-    setPassword("");
+    setUsername('');
+    setPassword('');
   }, []);
 
   useEffect(() => {
     if (message && message.type) {
       showToast();
     }
-    if (message.type === "success") {
-      setUsername("");
-      setPassword("");
-      props.navigation.navigate('CalendarView');
+    if (message.type === 'success') {
+      setUsername('');
+      setPassword('');
+      props.navigation.navigate('Calendar');
     }
   }, [message]);
 
@@ -48,12 +48,17 @@ const Login = (props: LoginProps) => {
 
     } else {
       setMessage({
-        type: "error",
-        text1: "Error",
-        text2: "Invalid credentials. Try again or create login credentials."
+        type: 'error',
+        text1: 'Error',
+        text2: 'Invalid credentials. Try again or create login credentials.'
       });
     }
   }
+
+  const handleSignUp = () => {
+    props.navigation.navigate('SignUp');
+  }
+
   return (
     <View
       style={{
@@ -62,18 +67,21 @@ const Login = (props: LoginProps) => {
         alignItems: 'center',
       }}>
       <Input
-        textContentType="username"
-        placeholder="Username"
+        textContentType='username'
+        placeholder='Username'
         onChangeText={e => setUsername(e)}
         defaultValue={username}
       />
       <Input
-        textContentType="password"
-        placeholder="Password"
+        autoComplete='off'
+        textContentType='password'
+        placeholder='Password'
         onChangeText={e => setPassword(e)}
         defaultValue={password}
+        secureTextEntry
       />
-      <Button title="Login" onPress={handleLogin} />
+      <Button title='Login' onPress={handleLogin} />
+      <Button title='Sign Up' onPress={handleSignUp} />
     </View>
   );
 }

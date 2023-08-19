@@ -1,8 +1,8 @@
 export enum Menu {
-  ADD_BILL = 'AddBill',
+  ADD_BILL = 'Add bill',
   FILTER = 'Filter',
-  CALENDAR_VIEW = 'CalendarView',
-  GRID_VIEW = 'GridView',
+  CALENDAR_VIEW = 'Calendar',
+  GRID_VIEW = 'Grid',
   PROFILE = 'Profile',
   LOGOUT = 'Logout'
 }

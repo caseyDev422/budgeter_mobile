@@ -3,6 +3,7 @@ import Login from './components/Login/Login';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { HeaderBackButton } from '@react-navigation/elements';
 import AddBill from './components/AddBill/AddBill';
 import CalendarView from './components/CalendarView/CalendarView';
 import GridView from './components/GridView/GridView';
@@ -11,6 +12,7 @@ import Logout from './components/Logout/Logout';
 import Toast from 'react-native-toast-message';
 import MenuButton from './components/MenuButton/MenuButton';
 import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache } from '@apollo/client';
+import SignUp from './components/SignUp/SignUp';
 
 const httpLink = new HttpLink({ uri: 'http://10.0.2.2:4000/graphql'});
 
@@ -27,16 +29,17 @@ const App = () => {
     <ApolloProvider client={client}>
       <SafeAreaProvider>
         <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen name='Login'>
+          <Stack.Navigator screenOptions={{headerLeft: () => null}}>
+            <Stack.Screen name="Login">
               {props => <Login setVisible={setVisible} {...props} />}
             </Stack.Screen>
-            <Stack.Screen name='AddBill'>
+            <Stack.Screen name="Add bill">
               {props => <AddBill {...props} />}
             </Stack.Screen>
-            <Stack.Screen name='CalendarView' component={CalendarView} />
-            <Stack.Screen name='GridView' component={GridView} />
-            <Stack.Screen name='Profile' component={Profile} />
+            <Stack.Screen name="Calendar" component={CalendarView} />
+            <Stack.Screen name="Grid" component={GridView} />
+            <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="SignUp" options={{headerLeft: props => <HeaderBackButton {...props} />, headerTitle: 'Sign up' }} component={SignUp}/>
           </Stack.Navigator>
           {visible && (
             <MenuButton

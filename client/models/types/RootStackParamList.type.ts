@@ -3,7 +3,8 @@ export type RootStackParamList = {
   Login: undefined;
   AddBill: undefined;
   Filter: undefined;
-  CalendarView: undefined;
-  GridView: undefined;
+  Calendar: undefined;
+  Grid: undefined;
   Profile: undefined;
+  SignUp: undefined;
 }
