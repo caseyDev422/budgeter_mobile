@@ -18,12 +18,26 @@ const useToast = () => {
   const hideToast = () => {
     Toast.hide();
   }
+
+  const resetToast = () => {
+    setMessage(MESSAGE_INIT_STATE);
+  }
+
+  const setToast = (toastType: string, messageType: string, messageDetails: string, callbackFn: () => void | undefined) => {
+    setMessage({
+      type: toastType,
+      text1: messageType,
+      text2: messageDetails,
+      onPress: callbackFn
+    });
+  }
   
   return {
     message,
-    setMessage,
     showToast,
-    hideToast
+    hideToast,
+    resetToast,
+    setToast
   }
 }
 

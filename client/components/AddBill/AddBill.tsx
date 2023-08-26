@@ -34,7 +34,7 @@ const AddBill = (props: AddBillProps) => {
   }
   const [inputs, setInputs] = useState(INIT_FORM_VALUES);
   const [open, setOpen] = useState(false);
-  const { message, setMessage, showToast, hideToast} = useToast();
+  const { message, showToast, hideToast, setToast} = useToast();
   const [createBill, { data, loading, error}] = useMutation(CREATE_BILL_MUTATION);
 
   useEffect(() => {
@@ -78,30 +78,18 @@ const AddBill = (props: AddBillProps) => {
     console.log('createBillData', createBillData);
     // TODO: add a refetch of list bill queries when created
     try {
-      setMessage({
-        type: "info",
-        text1: "Info",
-        text2: "Attempting to create new bill..."
-      });
+      setToast('info', 'Info', 'Attempting to create new bill...', hideToast);
 
       await createBill({
         variables: {
           data: createBillData
         }
       });
-      setMessage({
-        type: "success",
-        text1: "Success",
-        text2: "New bill has been created!"
-      });
+      setToast('success', 'Success', 'New bill has been created!', hideToast);
     } catch (error: NetworkError | any) {
       console.log('error', error);
       console.log('error', error.networkError.result.errors);
-      setMessage({
-        type: "error",
-        text1: "Error",
-        text2: "Unable to create new bill. Please try again or contact support. 😔"
-      });
+      setToast('error', 'Error', 'Unable to create new bill. Please try again or contact support. 😔', hideToast);
     }
   }
 
