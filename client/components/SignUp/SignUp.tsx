@@ -1,11 +1,13 @@
 import { ErrorMessage, Formik } from 'formik';
 import React, { useState } from 'react';
 import { Text } from "react-native-elements";
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { User } from '../../models/User';
 import { Button, Input } from '@rneui/themed';
 import * as Yup from 'yup';
+import styles from '../GlobalStyleSheet';
 
+// TODO: fix validation, removed from form for now
 const SignUpScheme = Yup.object().shape({
   email: Yup.string().email('Email is invalid.').required('Email is required.'),
   password: Yup.string()
@@ -14,23 +16,11 @@ const SignUpScheme = Yup.object().shape({
     'Password must be at least 8 characters, contain at least 1 lowercase letter, 1 uppercase letter, 1 special character (!@#$%), and no repeated letters.'
   )
   .required('Password is required.')
-})
+});
 
 
 
 const SignUp = () => {
-
-  const signUpContainer = StyleSheet.create({
-    container: {
-      display: 'flex',
-      flexDirection: 'column',
-    }
-  })
-
-  const inputStyles = {
-    paddingVertical: 0,
-    marginVertical: 0
-  }
 
   const INIT_INPUTS: User = {
     userId : '',
@@ -65,45 +55,44 @@ const SignUp = () => {
    *  letters can't repeat (ex - aaB, BBek, aAkdIi)
    * 
    */
-  const errorTextStyle = {
-    color: "red",
-    paddingHorizontal: 10,
-  }
-  return (  
+
+  return (
     <Formik
-      style={signUpContainer.container}
+      validateOnBlur={true}
+      validateOnChange={false}
+      style={styles.container}
       initialValues={inputs}
       onSubmit={handleFormSubmit}
-      validationSchema={SignUpScheme}>
-      
-      {({handleSubmit, errors, touched}) => (
-        <>
-          {console.log('errors', errors)}
-          <View>
-        {errors.userId && touched.userId && <Text style={errorTextStyle}>{errors.userId}</Text>}
+    >
+      {({handleSubmit}) => (
+        <ScrollView>
+          <View style={styles.inputWrapper}>
             <Input
-              textContentType="username"
-              label="Username"
-              onChangeText={value => handleChange('userId', value)}>
-            </Input>
-            {errors.email && touched.email && <Text  style={errorTextStyle}>{errors.email}</Text>}
-            <ErrorMessage component={Text} name='email'/>
+              textContentType='username'
+              label='Username'
+              onChangeText={value => handleChange('userId', value)}></Input>
+          </View>
+          <View style={styles.inputWrapper}>
             <Input
-            style={inputStyles}
-              textContentType="emailAddress"
-              label="Email"
-              onChangeText={value => handleChange('email', value)}>
-            </Input>
-            {errors.password && touched.password ? <Text  style={errorTextStyle}>{errors.password}</Text> : null}
-            <ErrorMessage component={Text} name='password'/>
+              textContentType='emailAddress'
+              label='Email'
+              onChangeText={value => handleChange('email', value)}></Input>
+            <ErrorMessage name='email'>
+              {msg => <Text style={styles.errorText}>{msg}</Text>}
+            </ErrorMessage>
+          </View>
+          <View style={styles.inputWrapper}>
             <Input
-              textContentType="password"
-              label="Password"
+              textContentType='password'
+              label='Password'
               onChangeText={value => handleChange('password', value)}
               secureTextEntry></Input>
+            <ErrorMessage name='password'>
+              {msg => <Text style={styles.errorText}>{msg}</Text>}
+            </ErrorMessage>
           </View>
           <Button
-            title="Submit"
+            title='Submit'
             onPress={handleSubmit}
             buttonStyle={{backgroundColor: 'rgba(127, 220, 103, 1)'}}
             containerStyle={{
@@ -116,11 +105,10 @@ const SignUp = () => {
               marginHorizontal: 20,
             }}
           />
-        </>
+        </ScrollView>
       )}
     </Formik>
   );
-   
 }
 
 export default SignUp;

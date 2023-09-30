@@ -1,9 +1,8 @@
-
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import express = require("express");
 import cors = require("cors");
-import { resolvers } from "../prisma/generated/type-graphql";
+import { resolvers as typegraphResolvers } from "../prisma/generated/type-graphql";
 import { PrismaClient } from '@prisma/client';
 import { ApolloServer } from "apollo-server-express";
 
@@ -11,7 +10,7 @@ const prisma = new PrismaClient();
 
 const main = async () => {
   const schema = await buildSchema({
-    resolvers,
+    resolvers: [...typegraphResolvers],
     validate: false
   });
 
