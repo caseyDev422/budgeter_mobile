@@ -3,10 +3,9 @@ import { buildSchema } from "type-graphql";
 import express = require("express");
 import cors = require("cors");
 import { resolvers as typegraphResolvers } from "../prisma/generated/type-graphql";
-import { PrismaClient } from '@prisma/client';
 import { ApolloServer } from "apollo-server-express";
+import prisma from "./prisma";
 
-const prisma = new PrismaClient();
 
 const main = async () => {
   const schema = await buildSchema({

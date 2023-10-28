@@ -4,17 +4,19 @@ import { View } from 'react-native';
 import { Dialog } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import useToast from '../../hooks/useToast';
+import { RootStackParamList } from '../../models/types/RootStackParamList.type';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 interface LogoutProps {
   toggleModal: boolean;
+  navigation: StackNavigationProp<RootStackParamList>;
   setToggleModal: Dispatch<SetStateAction<boolean>>
   setShowMenu: Dispatch<SetStateAction<boolean>>
   setVisible: Dispatch<SetStateAction<boolean>>
 }
 
 const Logout = (props: LogoutProps) => {
-  const navigation = useNavigation();
-  const { message, setMessage, showToast } = useToast();
+  const { message, setToast, showToast, hideToast, resetToast } = useToast();
 
   useEffect(() => {
     showToast();
@@ -28,12 +30,16 @@ const Logout = (props: LogoutProps) => {
   const handleConfirm = () => {
     props.setShowMenu(false);
     props.setVisible(false);
-    setMessage({
-      type: 'success',
-      text1: 'Logout',
-      text2: 'You have logged out successfully.'
-    });
-    navigation.navigate('Login' as never);
+    setToast(
+      'success',
+      'Logout',
+      'You have logged out successfully.',
+      () => {
+        hideToast();
+        resetToast();
+      }
+    );
+    props.navigation.navigate('Login');
   }
 
   return (

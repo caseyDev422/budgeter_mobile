@@ -17,11 +17,11 @@ generator typegraphql {
 }
 
 model Bill {
-  id                    String          @id @default(auto()) @map("_id") @db.ObjectId
-  billName              String
-  amount                Float
-  dueDate               String
-  hasAutoDraft          Boolean?        @default(false)
+  id                      String          @id @default(auto()) @map("_id") @db.ObjectId
+  billName                String
+  amount                  Float
+  dueDate                 String
+  hasAutoDraft            Boolean?        @default(false)
 }
 
 model User {
@@ -30,7 +30,7 @@ model User {
   userId                  String?
   password                String?
   enabledMultiFactor      Boolean         @default(false)
-  loggedInTime            DateTime?        @default(now())
+  loggedInTime            DateTime?       
   loggedOutTime           DateTime?
-  userAccountCreationDate DateTime?
+  userAccountCreationDate DateTime?       @default(now())
 }

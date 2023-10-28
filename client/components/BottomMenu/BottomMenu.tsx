@@ -6,7 +6,7 @@ import { Menu } from '../../models/enums/MenuTitles';
 import { MenuItem } from '../../models/MenuItem';
 import { MenuProps } from '../MenuButton/MenuButton';
 import { useNavigation } from '@react-navigation/native';
-import Logout from '../Logout/Logout';
+import Logout from '../../pages/Logout/Logout';
 
 const BottomMenu = (props: MenuProps) => {
   const [toggleModal, setToggleModal] = useState(false)
