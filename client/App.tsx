@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Login from './pages/Login/Login';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
 import { HeaderBackButton } from '@react-navigation/elements';
 import AddBill from './pages/AddBill/AddBill';
 import CalendarView from './pages/CalendarView/CalendarView';
@@ -13,6 +13,7 @@ import Toast from 'react-native-toast-message';
 import MenuButton from './components/MenuButton/MenuButton';
 import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache } from '@apollo/client';
 import SignUp from './pages/SignUp/SignUp';
+import { RootStackParamList } from './models/types/RootStackParamList.type';
 
 const httpLink = new HttpLink({ uri: 'http://10.0.2.2:4000/graphql'});
 
@@ -30,16 +31,16 @@ const App = () => {
       <SafeAreaProvider>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{headerLeft: () => null}}>
-            <Stack.Screen name="Login">
+            <Stack.Screen name='Login'>
               {props => <Login setVisible={setVisible} {...props} />}
             </Stack.Screen>
-            <Stack.Screen name="Add bill">
+            <Stack.Screen name='Add bill'>
               {props => <AddBill {...props} />}
             </Stack.Screen>
-            <Stack.Screen name="Calendar" component={CalendarView} />
-            <Stack.Screen name="Grid" component={GridView} />
-            <Stack.Screen name="Profile" component={Profile} />
-            <Stack.Screen name="SignUp" options={{headerLeft: props => <HeaderBackButton {...props} />, headerTitle: 'Sign up' }} component={SignUp}/>
+            <Stack.Screen name='Calendar' component={CalendarView} />
+            <Stack.Screen name='Grid' component={GridView} />
+            <Stack.Screen name='Profile' component={Profile} />
+            <Stack.Screen name='SignUp' options={{headerLeft: props => <HeaderBackButton {...props} />, headerTitle: 'Sign up' }} component={SignUp}/>
           </Stack.Navigator>
           {visible && (
             <MenuButton

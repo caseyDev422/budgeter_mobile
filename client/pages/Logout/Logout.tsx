@@ -2,14 +2,13 @@ import { Text } from '@rneui/base';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Dialog } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import useToast from '../../hooks/useToast';
 import { RootStackParamList } from '../../models/types/RootStackParamList.type';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 interface LogoutProps {
   toggleModal: boolean;
-  navigation: StackNavigationProp<RootStackParamList>;
   setToggleModal: Dispatch<SetStateAction<boolean>>
   setShowMenu: Dispatch<SetStateAction<boolean>>
   setVisible: Dispatch<SetStateAction<boolean>>
@@ -17,7 +16,7 @@ interface LogoutProps {
 
 const Logout = (props: LogoutProps) => {
   const { message, setToast, showToast, hideToast, resetToast } = useToast();
-
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   useEffect(() => {
     showToast();
   }, [message]);
@@ -39,7 +38,7 @@ const Logout = (props: LogoutProps) => {
         resetToast();
       }
     );
-    props.navigation.navigate('Login');
+    navigation.navigate('Login');
   }
 
   return (

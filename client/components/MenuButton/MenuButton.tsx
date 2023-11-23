@@ -4,6 +4,7 @@ import BottomMenu from '../BottomMenu/BottomMenu';
 import { FAB } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../models/types/RootStackParamList.type';
+import { useNavigation } from '@react-navigation/native';
 
 export interface MenuProps {
   showMenu: boolean;
@@ -13,7 +14,6 @@ export interface MenuProps {
 }
 
 const MenuButton = (props: MenuProps) => {
-
   return (
     <View>
       <FAB

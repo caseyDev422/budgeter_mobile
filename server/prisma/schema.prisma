@@ -22,6 +22,7 @@ model Bill {
   amount                  Float
   dueDate                 String
   hasAutoDraft            Boolean?        @default(false)
+  userId                  String
 }
 
 model User {
