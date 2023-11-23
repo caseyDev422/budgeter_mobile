@@ -5,11 +5,12 @@ import cors = require("cors");
 import { resolvers as typegraphResolvers } from "../prisma/generated/type-graphql";
 import { ApolloServer } from "apollo-server-express";
 import prisma from "./prisma";
+import { UserResolver } from "./customResolvers/user/user.resolver";
 
 
 const main = async () => {
   const schema = await buildSchema({
-    resolvers: [...typegraphResolvers],
+    resolvers: [...typegraphResolvers, UserResolver],
     validate: false
   });
 
