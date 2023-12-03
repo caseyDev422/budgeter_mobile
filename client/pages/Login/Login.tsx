@@ -6,7 +6,7 @@ import useToast from '../../hooks/useToast';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../models/types/RootStackParamList.type';
-import { FIND_FIRST_USER_QUERY } from '../../graphql/user/user.queries';
+import { FIND_USER_QUERY } from '../../graphql/user/user.queries';
 import { useApolloClient, useLazyQuery } from '@apollo/client';
 
 
@@ -42,36 +42,49 @@ const Login = (props: LoginProps) => {
 
   useEffect(() => {
     const findUser = async () => {
-      const {data: userData} = await client.query({
-        query: FIND_FIRST_USER_QUERY,
-        variables: {
-          where: {
-            userId: {
-              equals: username.trim(),
+      console.log('username', username);
+      try {
+        const {data: userData} = await client.query({
+          query: FIND_USER_QUERY,
+          variables: {
+            where: {
+              userId: {
+                equals: username.trim(),
+              },
             },
           },
-        },
-        fetchPolicy: 'network-only',
-      });
-      if (userData.findFirstUser === null) {
-        setToast(
-          'error',
-          'Error',
-          `Unable to find user with name ${username}. Please sign up.`,
-          defaultToastCallback,
-        );
-        setUsername('');
-        setPassword('');
-      } else {
-        setIsCheckingUsername(false);
-        checkPassword(userData.findFirstUser);
+          fetchPolicy: 'network-only',
+        });
+        console.log('userData', userData);
+        if (userData.findUser === null) {
+          showErrorToast();
+        } else {
+          setIsCheckingUsername(false);
+          checkPassword(userData.findUser);
+        }
+      } catch (error) {
+        console.log("ERROR", error);
+        showErrorToast();
       }
+
     };
 
     if (isCheckingUsername) {
       findUser();
     }
   }, [isCheckingUsername]);
+
+  const showErrorToast = () => {
+    setToast(
+      'error',
+      'Error',
+      `Unable to find user with name ${username}. Please sign up.`,
+      defaultToastCallback,
+    );
+    setUsername('');
+    setPassword('');
+    return;
+  }
 
   const handleLogin = async () => {
     // TODO: implement hashing for username and password

@@ -4,7 +4,7 @@ import express = require("express");
 import cors = require("cors");
 import { resolvers as typegraphResolvers } from "../prisma/generated/type-graphql";
 import { ApolloServer } from "apollo-server-express";
-import prisma from "./prisma";
+import { prisma } from "./prisma";
 import { UserResolver } from "./customResolvers/user/user.resolver";
 
 

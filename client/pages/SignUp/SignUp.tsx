@@ -52,7 +52,6 @@ const SignUp = (props: SignUpProps) => {
 
   useEffect(() => {
     if (formSubmitting) {
-      
       setFormSubmitting(false);
     }
   }, [formSubmitting]);

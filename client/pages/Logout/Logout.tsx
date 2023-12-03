@@ -18,7 +18,10 @@ const Logout = (props: LogoutProps) => {
   const { message, setToast, showToast, hideToast, resetToast } = useToast();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   useEffect(() => {
-    showToast();
+    console.log('message', message);
+    if (message.type) {
+      showToast();
+    }
   }, [message]);
 
   const handleCancel = () => {
