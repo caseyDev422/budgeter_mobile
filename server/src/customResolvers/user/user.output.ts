@@ -1,11 +1,20 @@
+// import { UserWhereInput } from 'prisma/generated/type-graphql';
 import { Field, ID, ObjectType } from "type-graphql";
+
+export enum ErrorMessages {
+  NO_USER = 'No user found',
+}
+
+// export class CustomUserWhereInput extends UserWhereInput {
+//   message: ErrorMessages;
+// }
 
 @ObjectType({ description: "Person"})
 export class UserOutput {
-  @Field(() => ID)
+  @Field(() => ID, { nullable: true})
   id: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true})
   email: string;
 
   @Field(() => String, { nullable: true})
@@ -25,4 +34,7 @@ export class UserOutput {
 
   @Field(() => Date, { nullable: true})
   userAccountCreationDate?: Date;
+
+  @Field(() => String, { nullable: true})
+  message: ErrorMessages;
 }

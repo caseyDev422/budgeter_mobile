@@ -1,3 +1,5 @@
+import { ErrorMessages } from "./user.output";
+
 export interface IUser {
   id: string;
   email: string;
@@ -7,4 +9,5 @@ export interface IUser {
   loggedInTime: Date;
   loggedOutTime: Date;
   userAccountCreationDate: Date;
+  message: ErrorMessages;
 }

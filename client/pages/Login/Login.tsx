@@ -22,7 +22,7 @@ const Login = (props: LoginProps) => {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const { message, showToast, hideToast, resetToast, setToast } = useToast();
-  const [isCheckingUsername, setIsCheckingUsername] = useState(false);
+  const [isCheckingLoginCredentials, setIsCheckingLoginCredentials] = useState(false);
   const defaultToastCallback = () => {
     hideToast();
     resetToast();
@@ -51,6 +51,9 @@ const Login = (props: LoginProps) => {
               userId: {
                 equals: username.trim(),
               },
+              password: {
+                equals: password.trim(),
+              }
             },
           },
           fetchPolicy: 'network-only',
@@ -59,20 +62,20 @@ const Login = (props: LoginProps) => {
         if (userData.findUser === null) {
           showErrorToast();
         } else {
-          setIsCheckingUsername(false);
+          setIsCheckingLoginCredentials(false);
           checkPassword(userData.findUser);
         }
       } catch (error) {
-        console.log("ERROR", error);
         showErrorToast();
+        throw new Error(`No user found: ${error}`);
       }
 
     };
 
-    if (isCheckingUsername) {
+    if (isCheckingLoginCredentials) {
       findUser();
     }
-  }, [isCheckingUsername]);
+  }, [isCheckingLoginCredentials]);
 
   const showErrorToast = () => {
     setToast(
@@ -92,7 +95,7 @@ const Login = (props: LoginProps) => {
     && password.trim() === undefined || password.trim() === '') {
       setToast('error', 'Error', 'No credentials were provided.', hideToast);
     } else {
-      setIsCheckingUsername(true);
+      setIsCheckingLoginCredentials(true);
     }
   }
 

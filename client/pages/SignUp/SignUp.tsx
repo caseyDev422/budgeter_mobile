@@ -41,8 +41,8 @@ const SignUp = (props: SignUpProps) => {
 
   const [inputs, setInputs] = useState(INIT_INPUTS);
   const { message, showToast, hideToast, setToast } = useToast();
-  const [createUser, {error: userError}] = useMutation(CREATE_USER_MUTATION);
-  const [formSubmitting, setFormSubmitting] = useState(false);
+  const [createNewUser, {error: userError}] = useMutation(CREATE_USER_MUTATION);
+  // const [formSubmitting, setFormSubmitting] = useState(false);
   useEffect(() => {
     console.log("message", message);
     if (message.type) {
@@ -50,11 +50,11 @@ const SignUp = (props: SignUpProps) => {
     }
   }, [message]);
 
-  useEffect(() => {
-    if (formSubmitting) {
-      setFormSubmitting(false);
-    }
-  }, [formSubmitting]);
+  // useEffect(() => {
+  //   if (formSubmitting) {
+  //     setFormSubmitting(false);
+  //   }
+  // }, [formSubmitting]);
 
 
   const handleFormSubmit = async () => {
@@ -64,7 +64,7 @@ const SignUp = (props: SignUpProps) => {
     }
     console.log(signupData);
     try {
-      await createUser({
+      await createNewUser({
         variables: {
           data: signupData
         }
